@@ -1,13 +1,29 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: "Kubernetes config file generator"
+description: "Generate Kubernetes config file for the service account"
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  caData:
+    description: "certificate-authority-data value for the cluster."
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  host:
+    description: "Kubernetes API server url."
+    required: true
+  clusterName:
+    description: "Kubernetes cluster name."
+    required: true
+  namespace:
+    description: "The Kubernetes namespace to operate under."
+    required: false
+    default: "default"
+  serviceAccountName:
+    description: "Kubernetes service account name."
+    required: false
+    default: "default"
+  serviceAccountToken:
+    description: "Kubernetes service account secret."
+    required: false
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: "node12"
+  main: "index.js"
+branding:
+  icon: "anchor"
+  color: "blue"

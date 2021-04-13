@@ -1,15 +1,67 @@
+const fs = require("fs");
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+async function run() {
+  try {
+    // Set working constants.
+    const DOBaseUrl = "https://api.digitalocean.com";
+    const workdir = `${process.env.HOME}/kube`;
+    await io.mkdirP(workdir);
+
+    // Grab user input.
+    const caData = core.getInput("caData");
+    const host = core.getInput("host");
+    const clusterName = core.getInput("clusterName");
+    const namespace = core.getInput("namespace");
+    const serviceAccountName = core.getInput("serviceAccountName");
+    const serviceAccountToken = core.getInput("serviceAccountToken");
+
+    // Construct a kubeconfig object.
+    const kubeconfig = {
+      apiVersion: "v1",
+      clusters: [
+        {
+          cluster: {
+            "certificate-authority-data": caData,
+            server: host,
+          },
+          name: clusterName
+        }
+      ],
+      contexts: [
+        {
+          context: {
+            cluster: clusterName,
+            namespace: namespace,
+            user: serviceAccountName
+          },
+          name: clusterName
+        }
+      ],
+      "current-context": clusterName,
+      kind: "Config",
+      preferences: {},
+      users: [
+        {
+          name: serviceAccountName,
+          user: {
+            token: serviceAccountToken
+          }
+        }
+      ]
+    };
+
+    // Save the kubeconfig object.
+    const formattedConfig = JSON.stringify(kubeconfig, null, 4);
+    fs.writeFileSync(`${workdir}/config`, formattedConfig);
+
+    // Set KUBECONFIG environment variable.
+    core.exportVariable("KUBECONFIG", `${workdir}/config`);
+  }
+  catch (error) {
+    core.setFailed(error.message);
+  }
 }
+
+run();
