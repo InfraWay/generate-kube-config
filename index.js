@@ -19,6 +19,7 @@ async function run() {
     const serviceAccountToken = core.getInput("serviceAccountToken");
 
     // Construct a kubeconfig object.
+    const serviceAccountFullName = 'system:serviceaccount:${namespace}:${serviceAccountName}'
     const kubeconfig = {
       apiVersion: "v1",
       clusters: [
@@ -35,7 +36,7 @@ async function run() {
           context: {
             cluster: clusterName,
             namespace: namespace,
-            user: serviceAccountName
+            user: serviceAccountFullName
           },
           name: clusterName
         }
@@ -45,7 +46,7 @@ async function run() {
       preferences: {},
       users: [
         {
-          name: serviceAccountName,
+          name: serviceAccountFullName,
           user: {
             token: serviceAccountToken
           }
