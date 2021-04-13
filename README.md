@@ -3,8 +3,18 @@ Action generating Kubernetes config file for specific service account. Config fi
 Use-case: Service Account
 
 ## Inputs
+### `caData`
+**Required** CA Data.
+### `host`
+**Required** Kubernetes API server URL.
 ### `clusterName`
 **Required** Full cluster name, e.g. `"do-fra1-k8s-cluster-dev"`.
+### `namespace`
+**Required** The Kubernetes namespace to operate under.
+### `serviceAccountName`
+**Required** Kubernetes service account name.
+### `serviceAccountToken`
+**Required** Kubernetes service account secret.
 
 ## Outputs
 Generated kubeconfig will be stored in `$HOME/.kube/config`
