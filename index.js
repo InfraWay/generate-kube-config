@@ -1,23 +1,22 @@
-import { writeFileSync } from 'fs';
-
-import { getInput, exportVariable, setFailed } from '@actions/core';
-import github from '@actions/github';
-import { mkdirP } from '@actions/io';
+const fs = require('fs');
+const core = require('@actions/core');
+const github = require('@actions/github');
+const io = require('@actions/io');
 
 async function run() {
   try {
     // Set working constants.
     const DOBaseUrl = "https://api.digitalocean.com";
     const workdir = `${process.env.HOME}/kube`;
-    await mkdirP(workdir);
+    await io.mkdirP(workdir);
 
     // Grab user input.
-    const caData = getInput("caData");
-    const host = getInput("host");
-    const clusterName = getInput("clusterName");
-    const namespace = getInput("namespace");
-    const serviceAccountName = getInput("serviceAccountName");
-    const serviceAccountToken = getInput("serviceAccountToken");
+    const caData = core.getInput("caData");
+    const host = core.getInput("host");
+    const clusterName = core.getInput("clusterName");
+    const namespace = core.getInput("namespace");
+    const serviceAccountName = core.getInput("serviceAccountName");
+    const serviceAccountToken = core.getInput("serviceAccountToken");
 
     // Construct a kubeconfig object.
     const kubeconfig = {
@@ -56,13 +55,13 @@ async function run() {
 
     // Save the kubeconfig object.
     const formattedConfig = JSON.stringify(kubeconfig, null, 4);
-    writeFileSync(`${workdir}/config`, formattedConfig);
+    fs.writeFileSync(`${workdir}/config`, formattedConfig);
 
     // Set KUBECONFIG environment variable.
-    exportVariable("KUBECONFIG", `${workdir}/config`);
+    core.exportVariable("KUBECONFIG", `${workdir}/config`);
   }
   catch (error) {
-    setFailed(error.message);
+    core.setFailed(error.message);
   }
 }
 
