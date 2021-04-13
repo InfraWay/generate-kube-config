@@ -1,6 +1,7 @@
-const fs = require("fs");
+const fs = require('fs');
 const core = require('@actions/core');
 const github = require('@actions/github');
+const io = require('@actions/io');
 
 async function run() {
   try {
