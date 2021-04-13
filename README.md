@@ -1,20 +1,21 @@
-# generate-kube-config
-Action generating Kubernetes config file
+# Generate kubeconfig file
+Action generating Kubernetes config file for service account
 
 ## Inputs
-
-### `who-to-greet`
-
-**Required** The name of the person to greet. Default `"World"`.
+### `clusterName`
+**Required** Full cluster name, e.g. `"do-fra1-k8s-cluster-fra1-prod"`.
 
 ## Outputs
-
-### `time`
-
-The time we greeted you.
+Generated kubeconfig will be stored in `$HOME/.kube/config`
 
 ## Example usage
-
-uses: actions/hello-world-javascript-action@v1.1
+```
+uses: infraway/generate-kube-config@main
 with:
-  who-to-greet: 'Mona the Octocat'
+  caData: ${{ secrets.KUBE_CA_DATA }}
+  host: ${{ secrets.KUBE_HOST }}
+  clusterName: ${{ secrets.KUBE_CLUSTER_NAME }}
+  namespace: "dev"
+  serviceAccountName: "system:serviceaccount:dev:dev-deploy-sa"
+  serviceAccountToken: ${{ secrets.SA_TOKEN_DEV }}
+```

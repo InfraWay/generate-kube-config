@@ -7,7 +7,7 @@ async function run() {
   try {
     // Set working constants.
     const DOBaseUrl = "https://api.digitalocean.com";
-    const workdir = `${process.env.HOME}/kube`;
+    const workdir = `${process.env.HOME}/.kube`;
     await io.mkdirP(workdir);
 
     // Grab user input.
