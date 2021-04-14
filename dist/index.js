@@ -6599,7 +6599,7 @@ async function run() {
     const serviceAccountToken = core.getInput("serviceAccountToken");
 
     // Construct a kubeconfig object.
-    const serviceAccountFullName = 'system:serviceaccount:${namespace}:${serviceAccountName}'
+    const serviceAccountFullName = `system:serviceaccount:${namespace}:${serviceAccountName}`
     const kubeconfig = {
       apiVersion: "v1",
       clusters: [
