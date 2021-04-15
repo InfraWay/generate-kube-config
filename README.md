@@ -1,5 +1,5 @@
 # Generate kubeconfig file
-Action generating Kubernetes config file for specific service account. Config file can be used to deploy into the cluster. 
+Action generating Kubernetes config file for specific service account. Config file can be used to deploy into the cluster.    
 Use-case: deployment to a namespace using Service Account with RBAC.
 
 ## Inputs
@@ -17,7 +17,7 @@ Use-case: deployment to a namespace using Service Account with RBAC.
 **Required** Kubernetes service account secret.
 
 ## Outputs
-Generated kubeconfig will be stored in `$HOME/.kube/config`
+Generated kubeconfig will be stored in `$HOME/.kube/config`.  
 `$HOME/.kube/config` will be added to `KUBECONFIG` environment variable.
 
 ## Example usage
