@@ -4,7 +4,7 @@ inputs:
   workdir:
     description: "Kubernetes config file directory."
     required: false
-    default: "${HOME}/.kube"
+    default: "~/.kube"
   caData:
     description: "certificate-authority-data value for the cluster."
     required: true
