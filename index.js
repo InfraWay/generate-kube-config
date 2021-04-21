@@ -5,9 +5,8 @@ const io = require('@actions/io');
 
 async function run() {
   try {
-    // Set working constants.
-    const DOBaseUrl = "https://api.digitalocean.com";
-    const workdir = `${process.env.HOME}/.kube`;
+    // Init working directiry.
+    const workdir = core.getInput("workdir");
     await io.mkdirP(workdir);
 
     // Grab user input.

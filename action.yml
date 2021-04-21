@@ -1,6 +1,10 @@
 name: "Kubernetes config file generator"
 description: "Generate Kubernetes config file for the service account"
 inputs:
+  workdir:
+    description: "Kubernetes config file directory."
+    required: false
+    default: "${{ env.HOME }}/.kube"
   caData:
     description: "certificate-authority-data value for the cluster."
     required: true
