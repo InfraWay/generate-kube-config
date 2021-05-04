@@ -3,6 +3,8 @@ Action generating Kubernetes config file for specific service account. Config fi
 Use-case: deployment to a namespace using Service Account with RBAC.
 
 ## Inputs
+### `workdir`
+**Optional** Path for kube config file. defaults to `~/.kube`. Set to ` ${{ github.workspace }}` when using config file in the subsequent Docketr actions.
 ### `caData`
 **Required** CA Data.
 ### `host`
@@ -17,13 +19,14 @@ Use-case: deployment to a namespace using Service Account with RBAC.
 **Required** Kubernetes service account secret.
 
 ## Outputs
-Generated kubeconfig will be stored in `$HOME/.kube/config`.  
-`$HOME/.kube/config` will be added to `KUBECONFIG` environment variable.
+Generated kubeconfig will be stored in `workdir/config`.  
+`workdir/config` will be added to `KUBECONFIG` environment variable.
 
 ## Example usage
 ```
 uses: infraway/generate-kube-config@1.0
 with:
+  workdir: ${{ github.workspace }}
   caData: ${{ secrets.KUBE_CA_DATA }}
   host: ${{ secrets.KUBE_HOST }}
   clusterName: ${{ secrets.KUBE_CLUSTER_NAME }}
