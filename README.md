@@ -24,7 +24,7 @@ Generated kubeconfig will be stored in `workdir/config`.
 
 ## Example usage
 ```
-uses: infraway/generate-kube-config@1.0
+uses: infraway/generate-kube-config@v1.1
 with:
   workdir: ${{ github.workspace }}
   caData: ${{ secrets.KUBE_CA_DATA }}
