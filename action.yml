@@ -5,26 +5,9 @@ inputs:
     description: "Kubernetes config file directory."
     required: false
     default: "~/.kube"
-  caData:
-    description: "certificate-authority-data value for the cluster."
+  kubeconfig:
+    description: "kubeconfig string"
     required: true
-  host:
-    description: "Kubernetes API server url."
-    required: true
-  clusterName:
-    description: "Kubernetes cluster name."
-    required: true
-  namespace:
-    description: "The Kubernetes namespace to operate under."
-    required: false
-    default: "default"
-  serviceAccountName:
-    description: "Kubernetes service account name."
-    required: false
-    default: "default"
-  serviceAccountToken:
-    description: "Kubernetes service account secret."
-    required: false
 runs:
   using: "node12"
   main: "dist/index.js"
